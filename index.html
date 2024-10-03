@@ -3,32 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Productividad</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Focus Page</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <button id="changeBackgroundBtn">cambiar fondo</button>
+
     <div class="container">
-        <button class="change-background">cambiar fondo</button>
-
-        <div class="pomodoro-section">
+        <div id="pomodoro" class="box">
             <h2>Pomodoro</h2>
-            <div id="timer">25:00</div>
-            <button id="start-pomodoro">Start</button>
-            <button id="reset-pomodoro">Reset</button>
+            <p id="timer">25:00</p>
+            <button id="startBtn">Start</button>
+            <button id="resetBtn">Reset</button>
         </div>
 
-        <div class="notes-section">
+        <div id="notes" class="box">
             <h2>Notas</h2>
-            <textarea id="notes" placeholder="Escribe tus notas aquí..."></textarea>
-        </div>
-
-        <div class="music-player">
-            <button id="prev-song">⏮️</button>
-            <button id="play-pause-song">⏯️</button>
-            <button id="next-song">⏭️</button>
+            <textarea id="notesArea" placeholder="Escribe tus notas aquí..."></textarea>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <div class="music-controls">
+        <button id="prevBtn">⏮️</button>
+        <button id="playBtn">▶️</button>
+        <button id="nextBtn">⏭️</button>
+    </div>
+
+    <script src="scripts.js"></script>
 </body>
 </html>
