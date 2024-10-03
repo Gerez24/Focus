@@ -1,37 +1,43 @@
 body {
     font-family: Arial, sans-serif;
     background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     text-align: center;
     color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    margin-top: 20px;
+    color: #444;
 }
 
 .pomodoro, .music-player, .notes, .backgrounds {
     margin: 20px auto;
     width: 300px;
-    padding: 10px;
+    padding: 15px;
     border: 1px solid #ccc;
     border-radius: 8px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
 button {
     padding: 10px 15px;
-    margin: 5px;
+    margin: 10px;
 }
 
 .notes ul {
-    list-style: none;
+    list-style-type: none;
     padding: 0;
 }
 
 .notes ul li {
-    margin: 5px 0;
-    padding: 5px;
+    margin: 10px 0;
+    padding: 10px;
     background-color: #f0f0f0;
     border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 .notes ul li button {
@@ -40,4 +46,5 @@ button {
     border: none;
     padding: 5px;
     border-radius: 5px;
+    margin-left: 15px;
 }
