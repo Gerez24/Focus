@@ -1,74 +1,90 @@
-// Temporizador Pomodoro
-let timerDisplay = document.getElementById('timer');
-let startBtn = document.getElementById('startBtn');
-let resetBtn = document.getElementById('resetBtn');
-let pomodoroTime = 1500; // 25 minutos
-let countdown;
+// Pomodoro Timer
+let timer;
 let isRunning = false;
+let timeLeft = 1500; // 25 minutes in seconds
 
-startBtn.addEventListener('click', function() {
+const startBtn = document.getElementById('start-pomodoro');
+const resetBtn = document.getElementById('reset-pomodoro');
+const timerDisplay = document.getElementById('timer');
+
+function updateTimerDisplay() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+}
+
+startBtn.addEventListener('click', () => {
     if (!isRunning) {
-        countdown = setInterval(() => {
-            if (pomodoroTime > 0) {
-                pomodoroTime--;
-                let minutes = Math.floor(pomodoroTime / 60);
-                let seconds = pomodoroTime % 60;
-                timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
-            } else {
-                clearInterval(countdown);
+        timer = setInterval(() => {
+            timeLeft--;
+            updateTimerDisplay();
+            if (timeLeft === 0) {
+                clearInterval(timer);
+                isRunning = false;
             }
         }, 1000);
         isRunning = true;
     }
 });
 
-resetBtn.addEventListener('click', function() {
-    clearInterval(countdown);
-    pomodoroTime = 1500;
-    timerDisplay.textContent = '25:00';
+resetBtn.addEventListener('click', () => {
+    clearInterval(timer);
+    timeLeft = 1500;
+    updateTimerDisplay();
     isRunning = false;
 });
 
-// Notas (no persistente, no guarda en base de datos)
-let notesArea = document.getElementById('notesArea');
-
-// Cambio de fondo
+// Change Background
 const backgrounds = [
-    'assets/images/bg1.jpg',
-    'assets/images/bg2.jpg',
-    'assets/images/bg3.jpg'
+    'linear-gradient(to bottom right, #89f7fe, #66a6ff)',
+    'linear-gradient(to bottom right, #ff9a9e, #fad0c4)',
+    'linear-gradient(to bottom right, #a18cd1, #fbc2eb)',
+    'linear-gradient(to bottom right, #fddb92, #d1fdff)'
 ];
-let currentBgIndex = 0;
-document.getElementById('changeBackgroundBtn').addEventListener('click', function() {
-    currentBgIndex = (currentBgIndex + 1) % backgrounds.length;
-    document.body.style.backgroundImage = `url(${backgrounds[currentBgIndex]})`;
+
+const changeBackgroundBtn = document.querySelector('.change-background');
+
+changeBackgroundBtn.addEventListener('click', () => {
+    const randomIndex = Math.floor(Math.random() * backgrounds.length);
+    document.body.style.background = backgrounds[randomIndex];
 });
 
-// Reproductor de música
-const musicFiles = [
-    'assets/music/song1.mp3',
-    'assets/music/song2.mp3',
-    'assets/music/song3.mp3'
-];
-let currentTrack = 0;
-let audio = new Audio(musicFiles[currentTrack]);
+// Music Player
+const playPauseBtn = document.getElementById('play-pause-song');
+const nextBtn = document.getElementById('next-song');
+const prevBtn = document.getElementById('prev-song');
 
-document.getElementById('playBtn').addEventListener('click', function() {
-    if (audio.paused) {
-        audio.play();
-    } else {
+let currentTrackIndex = 0;
+let isPlaying = false;
+
+const tracks = [
+    './assets/music/track1.mp3',
+    './assets/music/track2.mp3',
+    './assets/music/track3.mp3'
+];
+
+const audio = new Audio(tracks[currentTrackIndex]);
+
+playPauseBtn.addEventListener('click', () => {
+    if (isPlaying) {
         audio.pause();
+        isPlaying = false;
+    } else {
+        audio.play();
+        isPlaying = true;
     }
 });
 
-document.getElementById('nextBtn').addEventListener('click', function() {
-    currentTrack = (currentTrack + 1) % musicFiles.length;
-    audio.src = musicFiles[currentTrack];
+nextBtn.addEventListener('click', () => {
+    currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+    audio.src = tracks[currentTrackIndex];
     audio.play();
+    isPlaying = true;
 });
 
-document.getElementById('prevBtn').addEventListener('click', function() {
-    currentTrack = (currentTrack - 1 + musicFiles.length) % musicFiles.length;
-    audio.src = musicFiles[currentTrack];
+prevBtn.addEventListener('click', () => {
+    currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+    audio.src = tracks[currentTrackIndex];
     audio.play();
+    isPlaying = true;
 });
