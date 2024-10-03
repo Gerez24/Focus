@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Productividad</title>
+    <title>Página de Productividad</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -22,7 +22,7 @@
     <div class="music-player">
         <h2>Reproductor de Música</h2>
         <audio id="audioPlayer" controls>
-            <source src="music/song1.mp3" type="audio/mp3">
+            <source src="assets/music/song1.mp3" type="audio/mp3">
         </audio>
         <button id="nextSong">Siguiente Canción</button>
     </div>
@@ -36,8 +36,8 @@
 
     <div class="backgrounds">
         <h2>Cambiar Fondo</h2>
-        <button onclick="changeBackground('images/background1.jpg')">Fondo 1</button>
-        <button onclick="changeBackground('images/background2.jpg')">Fondo 2</button>
+        <button onclick="changeBackground('assets/images/background1.jpg')">Fondo 1</button>
+        <button onclick="changeBackground('assets/images/background2.jpg')">Fondo 2</button>
     </div>
 
     <script src="script.js"></script>
