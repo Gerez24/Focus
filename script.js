@@ -1,55 +1,90 @@
-// Manejo de notas temporales
-const notesList = document.getElementById('notesList');
-const noteInput = document.getElementById('noteInput');
-const addNoteButton = document.getElementById('addNote');
+// Pomodoro Timer
+let timer;
+let isRunning = false;
+let timeLeft = 1500; // 25 minutes in seconds
 
-let notes = []; // Almacenamiento temporal de notas en memoria
+const startBtn = document.getElementById('start-pomodoro');
+const resetBtn = document.getElementById('reset-pomodoro');
+const timerDisplay = document.getElementById('timer');
 
-// Función para renderizar las notas en la lista
-function renderNotes() {
-    notesList.innerHTML = ''; // Limpiar la lista
-    notes.forEach((note, index) => {
-        const li = document.createElement('li');
-        li.textContent = note;
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Eliminar';
-        deleteButton.onclick = () => {
-            notes.splice(index, 1); // Eliminar nota del array
-            renderNotes(); // Actualizar la lista
-        };
-        li.appendChild(deleteButton);
-        notesList.appendChild(li);
-    });
+function updateTimerDisplay() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    timerDisplay.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 }
 
-// Añadir nueva nota
-addNoteButton.addEventListener('click', () => {
-    const newNote = noteInput.value;
-    if (newNote) {
-        notes.push(newNote); // Añadir la nota al array
-        noteInput.value = ''; // Limpiar el input
-        renderNotes(); // Actualizar la lista de notas
+startBtn.addEventListener('click', () => {
+    if (!isRunning) {
+        timer = setInterval(() => {
+            timeLeft--;
+            updateTimerDisplay();
+            if (timeLeft === 0) {
+                clearInterval(timer);
+                isRunning = false;
+            }
+        }, 1000);
+        isRunning = true;
     }
 });
 
-// Manejo del cambio de fondo
-function changeBackground(imageUrl) {
-    document.body.style.backgroundImage = `url(${imageUrl})`;
-}
-
-// Reproductor de música
-const audioPlayer = document.getElementById('audioPlayer');
-const songs = ['assets/music/song1.mp3', 'assets/music/song2.mp3']; // Lista de canciones
-let currentSongIndex = 0;
-
-document.getElementById('nextSong').addEventListener('click', () => {
-    currentSongIndex = (currentSongIndex + 1) % songs.length;
-    audioPlayer.src = songs[currentSongIndex];
-    audioPlayer.play();
+resetBtn.addEventListener('click', () => {
+    clearInterval(timer);
+    timeLeft = 1500;
+    updateTimerDisplay();
+    isRunning = false;
 });
 
-audioPlayer.addEventListener('ended', () => {
-    currentSongIndex = (currentSongIndex + 1) % songs.length;
-    audioPlayer.src = songs[currentSongIndex];
-    audioPlayer.play();
+// Change Background
+const backgrounds = [
+    'linear-gradient(to bottom right, #89f7fe, #66a6ff)',
+    'linear-gradient(to bottom right, #ff9a9e, #fad0c4)',
+    'linear-gradient(to bottom right, #a18cd1, #fbc2eb)',
+    'linear-gradient(to bottom right, #fddb92, #d1fdff)'
+];
+
+const changeBackgroundBtn = document.querySelector('.change-background');
+
+changeBackgroundBtn.addEventListener('click', () => {
+    const randomIndex = Math.floor(Math.random() * backgrounds.length);
+    document.body.style.background = backgrounds[randomIndex];
+});
+
+// Music Player
+const playPauseBtn = document.getElementById('play-pause-song');
+const nextBtn = document.getElementById('next-song');
+const prevBtn = document.getElementById('prev-song');
+
+let currentTrackIndex = 0;
+let isPlaying = false;
+
+const tracks = [
+    './assets/music/track1.mp3',
+    './assets/music/track2.mp3',
+    './assets/music/track3.mp3'
+];
+
+const audio = new Audio(tracks[currentTrackIndex]);
+
+playPauseBtn.addEventListener('click', () => {
+    if (isPlaying) {
+        audio.pause();
+        isPlaying = false;
+    } else {
+        audio.play();
+        isPlaying = true;
+    }
+});
+
+nextBtn.addEventListener('click', () => {
+    currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+    audio.src = tracks[currentTrackIndex];
+    audio.play();
+    isPlaying = true;
+});
+
+prevBtn.addEventListener('click', () => {
+    currentTrackIndex = (currentTrackIndex - 1 + tracks.length) % tracks.length;
+    audio.src = tracks[currentTrackIndex];
+    audio.play();
+    isPlaying = true;
 });
