@@ -3,32 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página de Productividad</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Focus App</title>
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
     <div class="container">
-        <button class="change-background">cambiar fondo</button>
-
-        <div class="pomodoro-section">
+        <!-- Temporizador Pomodoro -->
+        <div id="pomodoro" class="window draggable">
             <h2>Pomodoro</h2>
             <div id="timer">25:00</div>
-            <button id="start-pomodoro">Start</button>
-            <button id="reset-pomodoro">Reset</button>
+            <button id="start-pomodoro">Iniciar</button>
+            <button id="reset-pomodoro">Reiniciar</button>
         </div>
 
-        <div class="notes-section">
-            <h2>Notas</h2>
-            <textarea id="notes" placeholder="Escribe tus notas aquí..."></textarea>
+        <!-- Lista de Tareas -->
+        <div id="tasks" class="window draggable">
+            <h2>Mis Tareas</h2>
+            <ul id="task-list">
+                <!-- Lista de tareas generada dinámicamente -->
+            </ul>
+            <input type="text" id="new-task" placeholder="Nueva tarea">
+            <button id="add-task">Añadir</button>
         </div>
 
-        <div class="music-player">
-            <button id="prev-song">⏮️</button>
-            <button id="play-pause-song">⏯️</button>
-            <button id="next-song">⏭️</button>
+        <!-- Reproductor de Música -->
+        <div id="music-player" class="window draggable">
+            <h2>Reproductor de Música</h2>
+            <div id="now-playing">No hay canción reproduciéndose</div>
+            <audio id="audio-player" controls>
+                <source src="assets/music/song1.mp3" type="audio/mpeg">
+            </audio>
+            <div id="controls">
+                <button id="prev-song">Anterior</button>
+                <button id="next-song">Siguiente</button>
+                <input type="range" id="volume-control" min="0" max="100" value="50">
+            </div>
+        </div>
+
+        <!-- Selector de Fondo -->
+        <div id="background-selector" class="window draggable">
+            <h2>Selector de Fondo</h2>
+            <button id="prev-bg">Fondo Anterior</button>
+            <button id="next-bg">Siguiente Fondo</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="assets/js/script.js"></script>
 </body>
 </html>
